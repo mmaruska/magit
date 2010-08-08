@@ -4927,6 +4927,7 @@ With a non numeric prefix ARG, show all entries"
   "Mode for looking at git log.
 
 \\{magit-log-mode-map}"
+  :keymap 'magit-log-mode-map
   :group 'magit)
 
 (defvar magit-log-buffer-name "*magit-log*"
