@@ -3802,7 +3802,7 @@ With a non numeric prefix ARG, show all entries"
   :group magit
   :init-value ()
   :lighter ()
-  :keymap magit-log-mode-map)
+  :keymap 'magit-log-mode-map)
 
 (defvar magit-log-buffer-name "*magit-log*"
   "Buffer name for display of log entries.")
