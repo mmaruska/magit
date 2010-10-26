@@ -4309,7 +4309,7 @@ With prefix force the removal even it it hasn't been merged."
   (let ((inhibit-read-only t)
         (branches (mapcar 'magit--branch-view-details
                           (apply 'magit-git-lines "branch" "-va"
-				 magit-custom-options))))
+				 "--no-color" magit-custom-options))))
     (erase-buffer)
     (insert
      (mapconcat
