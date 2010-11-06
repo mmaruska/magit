@@ -469,6 +469,7 @@ Many Magit faces inherit from this one by default."
     (define-key map (kbd "x") 'magit-reset-head)
     (define-key map (kbd "e") 'magit-log-show-more-entries)
     (define-key map (kbd "l") 'magit-key-mode-popup-logging)
+    (define-key map (kbd "s") 'magit-goto-status)
     map))
 
 (defvar magit-reflog-mode-map
@@ -3103,6 +3104,13 @@ Uncomitted changes in both working tree and staging area are lost.
 			   "Pending changes"
 			   'magit-wash-diffs
 			   "diff" (magit-diff-U-arg) "-R" orig)))))
+
+(defun magit-goto-status ()
+  "go to the status buffer, associated with the current Log buffer"
+  (interactive)
+  (let ((buffer (magit-find-status-buffer)))
+    (if buffer
+	(switch-to-buffer buffer))))
 
 (defun magit-rewrite-start (from &optional onto)
   (interactive (list (magit-read-rev "Rewrite from" (magit-default-rev))))
