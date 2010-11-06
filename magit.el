@@ -1181,7 +1181,7 @@ see `magit-insert-section' for meaning of the arguments"
 			       (line-number-at-pos
 				(magit-section-end next)))))
 		(if (< offset (window-height))
-		    (recenter offset)))))
+		    (recenter (- offset 1))))))
       (message "No next section"))))
 
 (defun magit-prev-section (section)
