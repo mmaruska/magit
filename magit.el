@@ -3487,6 +3487,8 @@ This means that the eventual commit does 'git commit --allow-empty'."
     (setq magit-pre-log-edit-window-configuration
 	  (current-window-configuration))
     (pop-to-buffer buf)
+    ;; So, this should be SHOWN to the user. It does contain
+    ;; stuff, that magit cannot know!
     (when (file-exists-p ".git/MERGE_MSG")
       (insert-file-contents ".git/MERGE_MSG"))
     (setq default-directory dir)
