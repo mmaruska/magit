@@ -4140,7 +4140,8 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
          (pending (magit-git-lines "rev-list" (concat base ".."))))
     (magit-write-rewrite-info `((orig ,orig)
                                 (pending ,@(mapcar #'list pending))))
-    (magit-run-git "reset" "--hard" base)))
+    (magit-run-git "reset" "--hard" base))
+  (switch-to-buffer (magit-find-status-buffer)))
 
 (defun magit-rewrite-stop (&optional noconfirm)
   (interactive)
