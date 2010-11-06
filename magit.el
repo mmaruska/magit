@@ -4986,6 +4986,19 @@ With a non numeric prefix ARG, show all entries"
     (magit-mode-init topdir 'magit-log-mode #'magit-refresh-log-buffer range
                      'long args)))
 
+(defun magit-log-files (&optional arg)
+  (interactive "P")
+  (let* ((range (if arg
+		    (magit-read-rev-range "Long log" "HEAD")
+		  "HEAD"))
+	 (topdir (magit-get-top-dir default-directory))
+	 (args (list (magit-rev-range-to-git range))))
+    (switch-to-buffer magit-log-buffer-name)
+    (magit-mode-init topdir 'log #'magit-refresh-log-buffer range
+		     "--name-only" ;; "--stat"
+		     args)
+    (magit-log-mode t)))
+
 ;;; Reflog
 
 (defvar magit-reflog-head nil
