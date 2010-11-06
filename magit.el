@@ -3816,7 +3816,7 @@ With a non numeric prefix ARG, show all entries"
 (magit-define-command display-log (&optional ask-for-range &rest extra-args)
   (interactive)
   (let* ((log-range (if ask-for-range
-                        (magit-read-rev-range "Log" "HEAD")
+                        (magit-read-rev-range "Log" "master" "HEAD")
                       "HEAD"))
 	 (topdir (magit-get-top-dir default-directory))
 	 (args (nconc (list (magit-rev-range-to-git log-range))
