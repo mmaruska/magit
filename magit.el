@@ -1121,7 +1121,7 @@ CMD is an external command that will be run with ARGS as arguments"
 	 (section
 	  (magit-with-section section-title section-type
 	    (if buffer-title
-		(insert (propertize buffer-title 'face 'magit-section-title)
+		(insert (propertize buffer-title 'font-lock-face 'magit-section-title)
 			"\n"))
 	    (setq body-beg (point))
 	    (apply 'process-file cmd nil t nil args)
@@ -1457,7 +1457,7 @@ TITLE is the displayed title of the section."
       (setq magit-highlighted-section section)
       (if (not magit-highlight-overlay)
 	  (let ((ov (make-overlay 1 1)))
-	    (overlay-put ov 'face 'magit-item-highlight)
+	    (overlay-put ov 'font-lock-face 'magit-item-highlight)
 	    (setq magit-highlight-overlay ov)))
       (if (and section (magit-section-type section))
 	  (move-overlay magit-highlight-overlay
@@ -2208,11 +2208,11 @@ in the corresponding directories."
 	       (let ((prefix (buffer-substring-no-properties
 			      (point) (min (+ (point) n-columns) (point-max)))))
 		 (cond ((string-match "\\+" prefix)
-			(magit-put-line-property 'face 'magit-diff-add))
+			(magit-put-line-property 'font-lock-face 'magit-diff-add))
 		       ((string-match "-" prefix)
-			(magit-put-line-property 'face 'magit-diff-del))
+			(magit-put-line-property 'font-lock-face 'magit-diff-del))
 		       (t
-			(magit-put-line-property 'face 'magit-diff-none))))
+			(magit-put-line-property 'font-lock-face 'magit-diff-none))))
 	       (forward-line))))
 	 t)
 	(t
@@ -2435,7 +2435,7 @@ must return a string which will represent the log line.")
 			(if (string-match ref-re r)
 			    (match-string 2 r)
 			  r)
-			'face (cond
+			'font-lock-face (cond
 			       ((string= (match-string 1 r) "remotes")
 				'magit-log-head-label-remote)
 			       ((string= (match-string 1 r) "bisect")
@@ -2451,13 +2451,13 @@ must return a string which will represent the log line.")
 		    " "))))
     (concat
      (if sha1
-	 (propertize (substring sha1 0 8) 'face 'magit-log-sha1)
+	 (propertize (substring sha1 0 8) 'font-lock-face 'magit-log-sha1)
        (insert-char ? 8))
      " "
-     (propertize graph 'face 'magit-log-graph)
+     (propertize graph 'font-lock-face 'magit-log-graph)
      string-refs
      (when message
-       (propertize message 'face 'magit-log-message)))))
+       (propertize message 'font-lock-face 'magit-log-message)))))
 
 (defvar magit-log-count ()
   "Internal var used to count the number of logs actually added in a buffer.")
@@ -2580,7 +2580,7 @@ insert a line to tell how to insert more of them"
 (defun magit-refresh-marked-commits-in-buffer ()
   (if (not magit-mark-overlay)
       (let ((ov (make-overlay 1 1)))
-	(overlay-put ov 'face 'magit-item-mark)
+	(overlay-put ov 'font-lock-face 'magit-item-mark)
 	(setq magit-mark-overlay ov)))
   (delete-overlay magit-mark-overlay)
   (magit-for-all-sections
@@ -2638,10 +2638,10 @@ insert a line to tell how to insert more of them"
   (cond
    ((string= "." remote)
     (format "branch %s"
-	    (propertize remote-branch 'face 'magit-branch)))
+	    (propertize remote-branch 'font-lock-face 'magit-branch)))
    (remote
       (concat
-       (propertize remote-branch 'face 'magit-branch)
+       (propertize remote-branch 'font-lock-face 'magit-branch)
        " @ "
        remote
        " ("
@@ -2664,7 +2664,7 @@ insert a line to tell how to insert more of them"
 	  (insert "Remote:   " remote-string "\n"))
 	(insert (format "Local:    %s %s\n"
 			(propertize (or branch "(detached)")
-				    'face 'magit-branch)
+				    'font-lock-face 'magit-branch)
 			(abbreviate-file-name default-directory)))
 	(insert (format "Head:     %s\n"
 			(if no-commit "nothing commited (yet)" head)))
@@ -3051,7 +3051,7 @@ Uncomitted changes in both working tree and staging area are lost.
     (when pending
       (magit-with-section 'pending nil
 	(insert (propertize "Pending commits:\n"
-			    'face 'magit-section-title))
+			    'font-lock-face 'magit-section-title))
 	(dolist (p pending)
 	  (let* ((commit (car p))
 		 (properties (cdr p))
@@ -4319,7 +4319,7 @@ With prefix force the removal even it it hasn't been merged."
           (cdr (assoc 'current b))
           (propertize (or (cdr (assoc 'sha1 b))
                           "       ")
-                      'face 'magit-log-sha1)
+                      'font-lock-face 'magit-log-sha1)
           " "
           (cdr (assoc 'branch b))
           (when (assoc 'other-ref b)
