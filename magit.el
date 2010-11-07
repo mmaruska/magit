@@ -661,6 +661,7 @@ operation after commit).")
     (define-key map (kbd "e") 'magit-log-show-more-entries)
     (define-key map (kbd "l") 'magit-key-mode-popup-logging)
     (define-key map (kbd "s") 'magit-goto-status)
+    (define-key map (kbd "r s") 'magit-invoke-rewrite-start)
     map))
 
 (defvar magit-wazzup-mode-map
@@ -4120,6 +4121,13 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
                            "Pending changes"
                            'magit-wash-diffs
                            "diff" (magit-diff-U-arg) "-R" orig)))))
+
+(defun magit-invoke-rewrite-start (prefix)
+  "different args, to be used inside the *Log* buffer"
+  (interactive "P")
+  (if prefix
+      (call-interactively 'magit-rewrite-start)
+    (magit-rewrite-start (magit-default-rev))))
 
 (defun magit-goto-status ()
   "go to the status buffer, associated with the current Log buffer"
