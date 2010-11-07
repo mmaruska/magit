@@ -2195,6 +2195,22 @@ in the corresponding directories."
 (defun magit-diff-item-file2 (diff)
   (caddr (magit-section-info diff)))
 
+;; mmc:
+(defun magit-fontify-diff ()
+  ""
+  (while (not (or (eobp)
+		  (looking-at "^diff\\|^@@")))
+    (let ((prefix (buffer-substring-no-properties
+		   (point) (min (+ (point) n-columns) (point-max)))))
+      (cond ((string-match "\\+" prefix)
+	     ;; face
+	     (magit-put-line-property 'font-lock-face 'magit-diff-add))
+	    ((string-match "-" prefix)
+	     (magit-put-line-property 'font-lock-face 'magit-diff-del)) ;face
+	    (t
+	     (magit-put-line-property 'font-lock-face 'magit-diff-none)))) ;face
+    (forward-line)))
+
 (defun magit-wash-hunk ()
   (cond ((looking-at "\\(^@+\\)[^@]*@+")
 	 (let ((n-columns (1- (length (match-string 1))))
@@ -2203,17 +2219,7 @@ in the corresponding directories."
 	     (add-text-properties (match-beginning 0) (match-end 0)
 				  '(face magit-diff-hunk-header))
 	     (forward-line)
-	     (while (not (or (eobp)
-			     (looking-at "^diff\\|^@@")))
-	       (let ((prefix (buffer-substring-no-properties
-			      (point) (min (+ (point) n-columns) (point-max)))))
-		 (cond ((string-match "\\+" prefix)
-			(magit-put-line-property 'font-lock-face 'magit-diff-add))
-		       ((string-match "-" prefix)
-			(magit-put-line-property 'font-lock-face 'magit-diff-del))
-		       (t
-			(magit-put-line-property 'font-lock-face 'magit-diff-none))))
-	       (forward-line))))
+	     (magit-fontify-diff)))
 	 t)
 	(t
 	 nil)))
