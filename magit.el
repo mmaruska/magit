@@ -4166,13 +4166,39 @@ This is only meaningful in wazzup buffers.")
 
 (defun magit-show-item-or-scroll-down ()
   (interactive)
-  (magit-section-action (item info)
-    ((commit)
-     (magit-show-commit info #'scroll-down))
-    ((stash)
-     (magit-show-stash info #'scroll-down))
+  (condition-case error-var
+      (magit-section-action (item info)
+	((commit)
+	 (magit-show-commit info #'scroll-down))
+	((stash)
+	 (magit-show-stash info #'scroll-down))
+	(t
+	 (scroll-down)))
+    (beginning-of-buffer ;;"funcall: End of buffer"
+     (call-interactively 'magit-goto-previous-section)
+     ;(message "bingo")
+     )
+    (end-of-buffer ;;"funcall: Beginning of buffer"
+     (call-interactively 'magit-goto-next-section)
+     ;(message "bingo")
+     )
+    ;; ((and
+    ;;   (stringp error-var)
+    ;;   (or
+    ;;    (string= error-var "funcall: End of buffer")
+    ;;    (string= error-var "funcall: Beginning of buffer")
+    ;;    )
+    ;; 					;(consp error-var)
+    ;; 					;nil
+    ;;   )
+    ;;  (message "bingo")
+    ;; 					;(: Beginning of buffer buffer-end
+    ;; 					;(+ 1 1)
+    ;;  )
     (t
-     (scroll-down))))
+     (message "%s" error-var)
+     (message "%s" (car error-var))
+     )))
 
 (defun magit-mark-item (&optional unmark)
   (interactive "P")
