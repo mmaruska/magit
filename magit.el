@@ -403,6 +403,8 @@ Many Magit faces inherit from this one by default."
     (define-key map (kbd "P") 'magit-key-mode-popup-pushing)
     (define-key map (kbd "f") 'magit-key-mode-popup-fetching)
     (define-key map (kbd "b") 'magit-key-mode-popup-branching)
+    (define-key map (kbd "B") 'magit-checkout)
+    (define-key map (kbd "L") 'magit-display-log)
     (define-key map (kbd "F") 'magit-key-mode-popup-pulling)
     (define-key map (kbd "l") 'magit-key-mode-popup-logging)
     (define-key map (kbd "$") 'magit-display-process)
