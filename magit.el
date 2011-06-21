@@ -395,6 +395,7 @@ Many Magit faces inherit from this one by default."
     (define-key map (kbd "RET") 'magit-visit-item)
     (define-key map (kbd "SPC") 'magit-show-item-or-scroll-up)
     (define-key map (kbd "DEL") 'magit-show-item-or-scroll-down)
+    (define-key map (kbd "j") 'magit-show-item-or-scroll-down)
     (define-key map (kbd "C-w") 'magit-copy-item-as-kill)
     (define-key map (kbd "R") 'magit-rebase-step)
     (define-key map (kbd "t") 'magit-key-mode-popup-tagging)
