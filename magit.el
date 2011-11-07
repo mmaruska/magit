@@ -1275,9 +1275,11 @@ a commit, or any reference to one of those."
   (if (stringp range)
       (format "%s in %s" things range)
     (if (cdr range)
-        (format "%s from %s to %s" things
-                (magit-rev-describe (car range))
-                (magit-rev-describe (cdr range)))
+	(format "%s from %s to %s" things
+		(if (car range)
+		    (magit-rev-describe (car range))
+		  "<init>")
+		(magit-rev-describe (cdr range)))
       (format "%s at %s" things (magit-rev-describe (car range))))))
 
 (defun magit-default-rev (&optional no-trim)
