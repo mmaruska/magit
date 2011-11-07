@@ -2762,11 +2762,11 @@ Customize `magit-diff-refine-hunk' to change the default mode."
     (let ((prefix (buffer-substring-no-properties
                    (point) (min (+ (point) n-columns) (point-max)))))
       (cond ((string-match "\\+" prefix)
-             (magit-put-line-property 'face 'magit-diff-add))
+             (magit-put-line-property 'font-lock-face 'magit-diff-add))
             ((string-match "-" prefix)
-             (magit-put-line-property 'face 'magit-diff-del))
+             (magit-put-line-property 'font-lock-face 'magit-diff-del))
             (t
-             (magit-put-line-property 'face 'magit-diff-none))))
+             (magit-put-line-property 'font-lock-face 'magit-diff-none))))
     (forward-line)))
 
 (defun magit-wash-hunk ()
