@@ -611,6 +611,7 @@ operation after commit).")
     (define-key map (kbd "B") 'magit-key-mode-popup-bisecting)
     ;; (define-key map (kbd "B") 'magit-checkout)
     (define-key map (kbd "L") 'magit-display-log)
+    (define-key map (kbd "l") 'magit-goto-log)
     (define-key map (kbd "F") 'magit-key-mode-popup-pulling)
     (define-key map (kbd "l") 'magit-key-mode-popup-logging)
     (define-key map (kbd "$") 'magit-display-process)
@@ -4138,6 +4139,16 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
   (let ((buffer (magit-find-status-buffer)))
     (if buffer
 	(switch-to-buffer buffer))))
+
+(defun magit-goto-log ()
+  "go to the LOG buffer, associated with the current status buffer"
+  (interactive)
+  (let ((buffer (get-buffer magit-log-buffer-name)
+		;;(magit-find-status-buffer)
+	 ))
+    (if buffer
+	(switch-to-buffer buffer))))
+
 
 (defun magit-rewrite-start (from &optional onto)
   (interactive (list (magit-read-rev "Rewrite from" (magit-default-rev))))
