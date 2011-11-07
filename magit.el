@@ -922,7 +922,9 @@ pair (START . END), then the range is START..END.")
       (format "%s in %s" things range)
     (if (cdr range)
 	(format "%s from %s to %s" things
-		(magit-rev-describe (car range))
+		(if (car range)
+		    (magit-rev-describe (car range))
+		  "<init>")
 		(magit-rev-describe (cdr range)))
       (format "%s at %s" things (magit-rev-describe (car range))))))
 
