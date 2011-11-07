@@ -885,7 +885,7 @@ pair (START . END), then the range is START..END.")
 (defun magit-read-rev-range (op &optional def-beg def-end)
   (let ((beg (magit-read-rev (format "%s start" op)
 			     def-beg)))
-    (if (not beg)
+    (if (and nil (not beg))		;mmc!
 	nil
       (let ((end (magit-read-rev (format "%s end" op) def-end)))
 	(cons beg end)))))
