@@ -902,11 +902,15 @@ pair (START . END), then the range is START..END.")
       (error "No revision range specified"))
   (if (stringp range)
       range
-    (if (cdr range)
-	(format "%s..%s"
-		(magit-rev-to-git (car range))
-		(magit-rev-to-git (cdr range)))
-      (format "%s" (magit-rev-to-git (car range))))))
+    (if (not (car range))
+	(format "%s" (magit-rev-to-git (cdr range)))
+      (if (cdr range)
+	  (format "%s..%s"
+		  (if (car range)
+		      (magit-rev-to-git (car range))
+		    "")
+		  (magit-rev-to-git (cdr range)))
+	(format "%s" (magit-rev-to-git (car range)))))))
 
 (defun magit-rev-describe (rev)
   (or rev
