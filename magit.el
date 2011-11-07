@@ -1634,7 +1634,10 @@ FUNC should leave point at the end of the modified region"
 	      (with-current-buffer buffer
 		(bury-buffer))))
       (setq buffer-read-only t)
-      (let ((inhibit-read-only t))
+      (let ((inhibit-read-only t)
+	    ;; mmc:
+	    (magit-avoid-refresh-here
+	     (string= magit-log-buffer-name (buffer-name magit-process-client-buffer))))
 	(setq default-directory dir)
 	(if noerase
 	    (goto-char (point-max))
@@ -1690,7 +1693,11 @@ FUNC should leave point at the end of the modified region"
 	       (setq successp
 		     (equal (apply 'process-file cmd nil buf nil args) 0))
 	       (magit-set-mode-line-process nil)
-	       (magit-need-refresh magit-process-client-buffer))))
+	       ;; mmc: avoid this... at least for the Log buffer.
+	       ;; or have a way to avoid it.
+	       (if magit-avoid-refresh-here
+		   (magit-need-refresh (magit-find-status-buffer))
+		 (magit-need-refresh magit-process-client-buffer)))))
       (or successp
 	  noerror
 	  (error
