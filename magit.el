@@ -1158,7 +1158,7 @@ pair (START . END), then the range is START..END.")
 Removes references matching UNINTERESTING from the
 results. UNINTERESTING can be either a function taking a single
 argument or a list of strings used as regexps."
-  (let ((refs ()))
+  (let ((refs '(("-" . ""))))
     (dolist (line (magit-git-lines "show-ref"))
       (if (string-match "[^ ]+ +\\(.*\\)" line)
           (let ((ref (match-string 1 line)))
