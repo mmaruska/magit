@@ -839,7 +839,7 @@ pair (START . END), then the range is START..END.")
 (make-variable-buffer-local 'magit-current-range)
 
 (defun magit-list-interesting-refs (&optional uninteresting)
-  (let ((refs ()))
+  (let ((refs '(("-" . ""))))
     (dolist (line (magit-git-lines "show-ref"))
       (if (string-match "[^ ]+ +\\(.*\\)" line)
 	  (let ((ref (match-string 1 line)))
