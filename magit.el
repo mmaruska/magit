@@ -405,6 +405,7 @@ Many Magit faces inherit from this one by default."
     (define-key map (kbd "b") 'magit-key-mode-popup-branching)
     (define-key map (kbd "B") 'magit-checkout)
     (define-key map (kbd "L") 'magit-display-log)
+    (define-key map (kbd "l") 'magit-goto-log)
     (define-key map (kbd "F") 'magit-key-mode-popup-pulling)
     (define-key map (kbd "l") 'magit-key-mode-popup-logging)
     (define-key map (kbd "$") 'magit-display-process)
@@ -3122,6 +3123,16 @@ Uncomitted changes in both working tree and staging area are lost.
   (let ((buffer (magit-find-status-buffer)))
     (if buffer
 	(switch-to-buffer buffer))))
+
+(defun magit-goto-log ()
+  "go to the LOG buffer, associated with the current status buffer"
+  (interactive)
+  (let ((buffer (get-buffer magit-log-buffer-name)
+		;;(magit-find-status-buffer)
+	 ))
+    (if buffer
+	(switch-to-buffer buffer))))
+
 
 (defun magit-rewrite-start (from &optional onto)
   (interactive (list (magit-read-rev "Rewrite from" (magit-default-rev))))
