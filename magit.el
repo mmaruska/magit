@@ -1256,11 +1256,17 @@ a commit, or any reference to one of those."
       (error "No revision range specified"))
   (if (stringp range)
       range
-    (if (cdr range)
-        (format "%s..%s"
-                (magit-rev-to-git (car range))
-                (magit-rev-to-git (cdr range)))
-      (format "%s" (magit-rev-to-git (car range))))))
+    (cond
+     ((not (car range))
+      (format "%s" (magit-rev-to-git (cdr range))))
+     ((cdr range)
+      (format "%s..%s"
+              (if (car range)
+                  (magit-rev-to-git (car range))
+                "")
+              (magit-rev-to-git (cdr range))))
+     (else
+      (format "%s" (magit-rev-to-git (car range)))))))
 
 (defun magit-rev-describe (rev)
   (or rev
