@@ -1236,7 +1236,7 @@ a commit, or any reference to one of those."
 (defun magit-read-rev-range (op &optional def-beg def-end)
   (let ((beg (magit-read-rev (format "%s start" op)
                              def-beg)))
-    (if (not beg)
+    (if (and nil (not beg))
         nil
       (save-match-data
         (if (string-match "^\\(.+\\)\\.\\.\\(.+\\)$" beg)
