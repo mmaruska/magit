@@ -4831,6 +4831,11 @@ With prefix argument, changes in staging area are kept.
               (magit-format-commit commit "Reverting \"%s\"")))
             (t
              (magit-log-edit-append
+              ;; At this point I know, that this
+	      ;; message is not needed from .git/MERGE_MSG
+	      ;; only possibly the part about conflicts etc.
+	      ;; So best would be to take it from .git/MERGE_MSG
+	      ;; no?
               (magit-format-commit commit "%s%n%n%b"))
              (magit-log-edit-set-field
               'author
