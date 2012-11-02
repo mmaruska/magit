@@ -4341,10 +4341,12 @@ option, falling back to something hairy if that is unset."
     (if (re-search-forward "[ \t\n]*\\'" nil t)
         (replace-match "\n" nil nil))))
 
-(defun magit-log-edit-append (str)
+(defun magit-log-edit-append (str &rest no-newline)
   (with-current-buffer (get-buffer-create magit-log-edit-buffer-name)
     (goto-char (point-max))
-    (insert str "\n")))
+    (insert str)
+    (if (null no-newline)
+	(insert "\n"))))
 
 (defconst magit-log-header-end "-- End of Magit header --\n")
 
