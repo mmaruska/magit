@@ -4565,6 +4565,17 @@ This means that the eventual commit does 'git commit --allow-empty'."
   (interactive)
   (magit-log-edit-toggle-field 'allow-empty t))
 
+
+(defun magit-get-log-edit-buffer ()
+  "return the relevant for current-directory"
+  (let ((dir default-directory)
+	(buf (get-buffer-create magit-log-edit-buffer-name)))
+    (with-current-buffer buf
+      (setq default-directory dir))
+    buf))
+
+
+
 (defun magit-pop-to-log-edit (operation)
   (let ((dir default-directory)
         (magit-buf (current-buffer))
