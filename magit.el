@@ -4591,6 +4591,15 @@ This means that the eventual commit does 'git commit --allow-empty'."
     (setq magit-buffer-internal magit-buf)
     (message "Type C-c C-c to %s (C-c C-k to cancel)." operation)))
 
+;; without ..
+(defun magit-pop-to-log-edit-half (operation)
+  (let ((buf (magit-get-log-edit-buffer)))
+    (setq magit-pre-log-edit-window-configuration
+	  (current-window-configuration))
+    (pop-to-buffer buf)
+    (magit-log-edit-mode)
+    (message "Type C-c C-c to %s (C-c C-k to cancel)." operation)))
+
 (defun magit-log-edit (&optional arg)
   "Brings up a buffer to allow editing of commit messages.
 
