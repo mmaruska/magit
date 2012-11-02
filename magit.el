@@ -4648,7 +4648,35 @@ continue it.
                                                       (if (string= "" author-name) author-email author-name)
                                                       author-email
                                                       (if (string= "" author-date) "" (format ", %s" author-date))))))
-      (magit-pop-to-log-edit "commit"))))
+
+      	 ;; if under the estrella..
+	 ;; fixme: (with-current-buffer (magit-get-log-edit-buffer)
+	   ;; So, this should be SHOWN to the user. It does contain
+	   ;; stuff, that magit cannot know!
+           (when nil
+             (when (file-exists-p ".git/MERGE_MSG")
+               (erase-buffer)
+               (insert-file-contents ".git/MERGE_MSG")))
+
+           ;; maybe a general hook!
+           (when nil
+             (if (string-match "/next/" default-directory)
+                 (unless ;; already there ...
+                     (save-excursion
+                       (goto-char (point-min))
+                       (or
+                        (looking-at "\\[")
+                        (and
+                         (search-forward "-- End of Magit header --" nil t)
+                         (next-line)
+                         (looking-at "\\["))))
+                   (magit-log-edit-append
+                    ;;  fixme: this goes AFTER. Also, if I invoke this twice ....
+                    (concat "[" (magit-get-current-branch) "] ") t))))
+
+           ;; fixme:  -half
+           (magit-pop-to-log-edit "commit"))))
+
 
 (defun magit-add-log ()
   (interactive)
