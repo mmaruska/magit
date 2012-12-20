@@ -2747,6 +2747,21 @@ Customize `magit-diff-refine-hunk' to change the default mode."
 (defun magit-diff-item-range (diff)
   (nth 3 (magit-section-info diff)))
 
+(defun magit-fontify-diff ()
+  ""
+  (while (not (or (eobp)
+                  (looking-at "^diff\\|^@@")))
+    (magit-highlight-line-whitespace)
+    (let ((prefix (buffer-substring-no-properties
+                   (point) (min (+ (point) n-columns) (point-max)))))
+      (cond ((string-match "\\+" prefix)
+             (magit-put-line-property 'face 'magit-diff-add))
+            ((string-match "-" prefix)
+             (magit-put-line-property 'face 'magit-diff-del))
+            (t
+             (magit-put-line-property 'face 'magit-diff-none))))
+    (forward-line)))
+
 (defun magit-wash-hunk ()
   (cond ((looking-at "\\(^@+\\)[^@]*@+.*")
          (let ((n-columns (1- (length (match-string 1))))
@@ -2756,18 +2771,7 @@ Customize `magit-diff-refine-hunk' to change the default mode."
              (add-text-properties (match-beginning 0) (match-end 0)
                                   '(face magit-diff-hunk-header))
              (forward-line)
-             (while (not (or (eobp)
-                             (looking-at "^diff\\|^@@")))
-               (magit-highlight-line-whitespace)
-               (let ((prefix (buffer-substring-no-properties
-                              (point) (min (+ (point) n-columns) (point-max)))))
-                 (cond ((string-match "\\+" prefix)
-                        (magit-put-line-property 'face 'magit-diff-add))
-                       ((string-match "-" prefix)
-                        (magit-put-line-property 'face 'magit-diff-del))
-                       (t
-                        (magit-put-line-property 'face 'magit-diff-none))))
-               (forward-line)))
+             (magit-fontify-diff))
 
            (when (eq magit-diff-refine-hunk 'all)
              (save-excursion
