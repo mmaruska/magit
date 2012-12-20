@@ -1508,7 +1508,7 @@ CMD is an external command that will be run with ARGS as arguments."
          (section
           (magit-with-section section-title section-type
             (if buffer-title
-                (insert (propertize buffer-title 'face 'magit-section-title)
+                (insert (propertize buffer-title 'font-lock-face 'magit-section-title)
                         "\n"))
             (setq body-beg (point))
             (magit-cmd-insert cmd args)
@@ -3193,14 +3193,14 @@ must return a string which will represent the log line.")
 
     (concat
      (if sha1
-         (propertize sha1 'face 'magit-log-sha1)
+         (propertize sha1 'font-lock-face 'magit-log-sha1)
        (insert-char ? magit-sha1-abbrev-length))
      " "
      (when graph
-       (propertize graph 'face 'magit-log-graph))
+       (propertize graph 'font-lock-face 'magit-log-graph))
      string-refs
      (when message
-       (propertize message 'face 'magit-log-message)))))
+       (propertize message 'font-lock-face 'magit-log-message)))))
 
 (defvar magit-log-count ()
   "Internal var used to count the number of logs actually added in a buffer.")
@@ -3498,11 +3498,11 @@ FULLY-QUALIFIED-NAME is non-nil."
     (concat
      (when remote-rebase "onto ")
      "branch "
-     (propertize remote-branch 'face 'magit-branch)))
+     (propertize remote-branch 'font-lock-face 'magit-branch)))
    (remote
     (concat
      (when remote-rebase "onto ")
-     (propertize remote-branch 'face 'magit-branch)
+     (propertize remote-branch 'font-lock-face 'magit-branch)
      " @ "
      remote
      " ("
@@ -3532,7 +3532,7 @@ FULLY-QUALIFIED-NAME is non-nil."
           (insert "Remote:   " remote-string "\n"))
         (insert (format "Local:    %s %s\n"
                         (propertize (magit--bisect-info-for-status branch)
-                                    'face 'magit-branch)
+                                    'font-lock-face 'magit-branch)
                         (abbreviate-file-name default-directory)))
         (insert (format "Head:     %s\n"
                         (if no-commit "nothing commited (yet)" head)))
@@ -4068,7 +4068,7 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
     (when pending
       (magit-with-section 'pending nil
         (insert (propertize "Pending commits:\n"
-                            'face 'magit-section-title))
+                            'font-lock-face 'magit-section-title))
         (dolist (p pending)
           (let* ((commit (car p))
                  (properties (cdr p))
@@ -5689,7 +5689,7 @@ These are the branch names with the remote name stripped."
        ; sha1
        (propertize (or sha1
                        (make-string magit-sha1-abbrev-length ? ))
-                   'face 'magit-log-sha1)
+                   'font-lock-face 'magit-log-sha1)
        " "
        ; current marker
        (if current
@@ -5714,7 +5714,7 @@ These are the branch names with the remote name stripped."
                      (propertize (if (string= branch tracking-branch)
                                      (concat "@ " tracking-remote)
                                    (concat tracking-branch " @ " tracking-remote))
-                                 'face 'magit-log-head-label-remote))
+                                 'font-lock-face 'magit-log-head-label-remote))
                    ; ahead/behind information
                    (if (or ahead
                            behind)
@@ -5723,7 +5723,7 @@ These are the branch names with the remote name stripped."
                    (if ahead
                        (concat "ahead "
                                (propertize ahead
-                                           'face (if current
+                                           'font-lock-face (if current
                                                      'magit-branch))
                                (if behind
                                    ", "
@@ -5732,7 +5732,7 @@ These are the branch names with the remote name stripped."
                    (if behind
                        (concat "behind "
                                (propertize behind
-                                           'face 'magit-log-head-label-remote))
+                                           'font-lock-face 'magit-log-head-label-remote))
                      "")
                    "]")
          "")
@@ -5749,7 +5749,7 @@ These are the branch names with the remote name stripped."
 
     (magit-with-section (concat "remote:" remote-name) 'remote
       (magit-set-section-info remote-name)
-      (insert-before-markers (propertize (format "%s (%s):" remote-name urls) 'face 'magit-section-title) "\n")
+      (insert-before-markers (propertize (format "%s (%s):" remote-name urls) 'font-lock-face 'magit-section-title) "\n")
       (magit-wash-branches-between-point-and-marker marker remote-name))
     (insert-before-markers "\n")))
 
@@ -5784,7 +5784,7 @@ These are the branch names with the remote name stripped."
 
     ; actual displaying of information
     (magit-with-section "local" nil
-      (insert-before-markers (propertize "Local:" 'face 'magit-section-title) "\n")
+      (insert-before-markers (propertize "Local:" 'font-lock-face 'magit-section-title) "\n")
       (magit-set-section-info ".")
       (magit-wash-branches-between-point-and-marker
        (loop for x in markers thereis x)))
