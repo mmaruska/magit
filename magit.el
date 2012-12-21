@@ -2071,63 +2071,70 @@ function can be enriched by magit extension like magit-topgit and magit-svn"
               (with-current-buffer buffer
                 (bury-buffer))))
       (setq buffer-read-only t)
-      (let ((inhibit-read-only t))
-        (setq default-directory dir)
-        (if noerase
-            (goto-char (point-max))
-          (erase-buffer))
-        (insert "$ " (or logline
+      (let ((inhibit-read-only t)
+	    ;; mmc:
+	    (magit-avoid-refresh-here
+	     (string= magit-log-buffer-name (buffer-name magit-process-client-buffer))))
+	(setq default-directory dir)
+	(if noerase
+	    (goto-char (point-max))
+	  (erase-buffer))
+	(insert "$ " (or logline
                          (mapconcat 'identity cmd-and-args " "))
-                "\n")
-        (cond (nowait
-               (setq magit-process
-                     (let ((process-connection-type magit-process-connection-type))
-                       (apply 'magit-start-process cmd buf cmd args)))
-               (set-process-sentinel magit-process 'magit-process-sentinel)
-               (set-process-filter magit-process 'magit-process-filter)
-               (when input
-                 (with-current-buffer input
-                   (process-send-region magit-process
-                                        (point-min) (point-max)))
-                 (process-send-eof magit-process)
-                 (sit-for 0.1 t))
-               (cond ((= magit-process-popup-time 0)
-                      (pop-to-buffer (process-buffer magit-process)))
-                     ((> magit-process-popup-time 0)
-                      (run-with-timer
-                       magit-process-popup-time nil
-                       (function
-                        (lambda (buf)
-                          (with-current-buffer buf
-                            (when magit-process
-                              (display-buffer (process-buffer magit-process))
-                              (goto-char (point-max))))))
-                       (current-buffer))))
-               (setq successp t))
-              (input
-               (with-current-buffer input
-                 (setq default-directory dir)
-                 (setq magit-process
-                       ;; Don't use a pty, because it would set icrnl
-                       ;; which would modify the input (issue #20).
-                       (let ((process-connection-type nil))
-                         (apply 'magit-start-process cmd buf cmd args)))
-                 (set-process-filter magit-process 'magit-process-filter)
-                 (process-send-region magit-process
-                                      (point-min) (point-max))
-                 (process-send-eof magit-process)
-                 (while (equal (process-status magit-process) 'run)
-                   (sit-for 0.1 t))
-                 (setq successp
-                       (equal (process-exit-status magit-process) 0))
-                 (setq magit-process nil))
-               (magit-set-mode-line-process nil)
-               (magit-need-refresh magit-process-client-buffer))
-              (t
-               (setq successp
-                     (equal (apply 'process-file cmd nil buf nil args) 0))
-               (magit-set-mode-line-process nil)
-               (magit-need-refresh magit-process-client-buffer))))
+		"\n")
+	(cond (nowait
+	       (setq magit-process
+		     (let ((process-connection-type magit-process-connection-type))
+		       (apply 'magit-start-process cmd buf cmd args)))
+	       (set-process-sentinel magit-process 'magit-process-sentinel)
+	       (set-process-filter magit-process 'magit-process-filter)
+	       (when input
+		 (with-current-buffer input
+		   (process-send-region magit-process
+					(point-min) (point-max)))
+		 (process-send-eof magit-process)
+		 (sit-for 0.1 t))
+	       (cond ((= magit-process-popup-time 0)
+		      (pop-to-buffer (process-buffer magit-process)))
+		     ((> magit-process-popup-time 0)
+		      (run-with-timer
+		       magit-process-popup-time nil
+		       (function
+			(lambda (buf)
+			  (with-current-buffer buf
+			    (when magit-process
+			      (display-buffer (process-buffer magit-process))
+			      (goto-char (point-max))))))
+		       (current-buffer))))
+	       (setq successp t))
+	      (input
+	       (with-current-buffer input
+		 (setq default-directory dir)
+		 (setq magit-process
+		       ;; Don't use a pty, because it would set icrnl
+		       ;; which would modify the input (issue #20).
+		       (let ((process-connection-type nil))
+			 (apply 'magit-start-process cmd buf cmd args)))
+		 (set-process-filter magit-process 'magit-process-filter)
+		 (process-send-region magit-process
+				      (point-min) (point-max))
+		 (process-send-eof magit-process)
+		 (while (equal (process-status magit-process) 'run)
+		   (sit-for 0.1 t))
+		 (setq successp
+		       (equal (process-exit-status magit-process) 0))
+		 (setq magit-process nil))
+	       (magit-set-mode-line-process nil)
+	       (magit-need-refresh magit-process-client-buffer))
+	      (t
+	       (setq successp
+		     (equal (apply 'process-file cmd nil buf nil args) 0))
+	       (magit-set-mode-line-process nil)
+	       ;; mmc: avoid this... at least for the Log buffer.
+	       ;; or have a way to avoid it.
+	       (if magit-avoid-refresh-here
+		   (magit-need-refresh (magit-find-status-buffer))
+		 (magit-need-refresh magit-process-client-buffer)))))
       (or successp
           noerror
           (error
