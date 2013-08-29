@@ -567,12 +567,15 @@ operation after commit).")
   "Face for unknown ref labels shown in log buffer."
   :group 'magit-faces)
 
+;; (lookup-key magit-mode-map "o")
+;; after this I need to ... parent?
 (defvar magit-mode-map
   (let ((map (make-keymap)))
     (suppress-keymap map t)
     (define-key map (kbd "n") 'magit-goto-next-section)
     (define-key map (kbd "p") 'magit-goto-previous-section)
     (define-key map (kbd "^") 'magit-goto-parent-section)
+    (define-key map (kbd "o") 'magit-goto-parent-section)
     (define-key map (kbd "M-n") 'magit-goto-next-sibling-section)
     (define-key map (kbd "M-p") 'magit-goto-previous-sibling-section)
     (define-key map (kbd "TAB") 'magit-toggle-section)
