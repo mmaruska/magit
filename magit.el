@@ -656,6 +656,9 @@ operation after commit).")
     (define-key map (kbd "z") 'magit-key-mode-popup-stashing)
     map))
 
+(set-keymap-parent magit-status-mode-map magit-mode-map)
+
+
 (eval-after-load 'dired-x
   '(define-key magit-status-mode-map [remap dired-jump] 'magit-dired-jump))
 
@@ -668,6 +671,8 @@ operation after commit).")
     (define-key map (kbd "s") 'magit-goto-status)
     (define-key map (kbd "r s") 'magit-invoke-rewrite-start)
     map))
+(set-keymap-parent magit-log-mode-map magit-mode-map)
+
 
 (defvar magit-wazzup-mode-map
   (let ((map (make-sparse-keymap)))
