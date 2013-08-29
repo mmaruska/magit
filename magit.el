@@ -4401,10 +4401,12 @@ option, falling back to something hairy if that is unset."
     (if (re-search-forward "[ \t\n]*\\'" nil t)
         (replace-match "\n" nil nil))))
 
-(defun magit-log-edit-append (str)
+(defun magit-log-edit-append (str &rest no-newline)
   (with-current-buffer (get-buffer-create magit-log-edit-buffer-name)
     (goto-char (point-max))
-    (insert str "\n")))
+    (insert str)
+    (if (null no-newline)
+	(insert "\n"))))
 
 (defconst magit-log-header-end "-- End of Magit header --\n")
 
@@ -4623,6 +4625,17 @@ This means that the eventual commit does 'git commit --allow-empty'."
   (interactive)
   (magit-log-edit-toggle-field 'allow-empty t))
 
+
+(defun magit-get-log-edit-buffer ()
+  "return the relevant for current-directory"
+  (let ((dir default-directory)
+	(buf (get-buffer-create magit-log-edit-buffer-name)))
+    (with-current-buffer buf
+      (setq default-directory dir))
+    buf))
+
+
+
 (defun magit-pop-to-log-edit (operation)
   (let ((dir default-directory)
         (magit-buf (current-buffer))
@@ -4636,6 +4649,15 @@ This means that the eventual commit does 'git commit --allow-empty'."
     (magit-log-edit-mode)
     (make-local-variable 'magit-buffer-internal)
     (setq magit-buffer-internal magit-buf)
+    (message "Type C-c C-c to %s (C-c C-k to cancel)." operation)))
+
+;; without ..
+(defun magit-pop-to-log-edit-half (operation)
+  (let ((buf (magit-get-log-edit-buffer)))
+    (setq magit-pre-log-edit-window-configuration
+	  (current-window-configuration))
+    (pop-to-buffer buf)
+    (magit-log-edit-mode)
     (message "Type C-c C-c to %s (C-c C-k to cancel)." operation)))
 
 (defun magit-log-edit (&optional arg)
@@ -4686,7 +4708,35 @@ continue it.
                                                       (if (string= "" author-name) author-email author-name)
                                                       author-email
                                                       (if (string= "" author-date) "" (format ", %s" author-date))))))
-      (magit-pop-to-log-edit "commit"))))
+
+      	 ;; if under the estrella..
+	 ;; fixme: (with-current-buffer (magit-get-log-edit-buffer)
+	   ;; So, this should be SHOWN to the user. It does contain
+	   ;; stuff, that magit cannot know!
+           (when nil
+             (when (file-exists-p ".git/MERGE_MSG")
+               (erase-buffer)
+               (insert-file-contents ".git/MERGE_MSG")))
+
+           ;; maybe a general hook!
+           (when nil
+             (if (string-match "/next/" default-directory)
+                 (unless ;; already there ...
+                     (save-excursion
+                       (goto-char (point-min))
+                       (or
+                        (looking-at "\\[")
+                        (and
+                         (search-forward "-- End of Magit header --" nil t)
+                         (next-line)
+                         (looking-at "\\["))))
+                   (magit-log-edit-append
+                    ;;  fixme: this goes AFTER. Also, if I invoke this twice ....
+                    (concat "[" (magit-get-current-branch) "] ") t))))
+
+           ;; fixme:  -half
+           (magit-pop-to-log-edit "commit"))))
+
 
 (defun magit-add-log ()
   (interactive)
@@ -4878,6 +4928,11 @@ With prefix argument, changes in staging area are kept.
               (magit-format-commit commit "Reverting \"%s\"")))
             (t
              (magit-log-edit-append
+              ;; At this point I know, that this
+	      ;; message is not needed from .git/MERGE_MSG
+	      ;; only possibly the part about conflicts etc.
+	      ;; So best would be to take it from .git/MERGE_MSG
+	      ;; no?
               (magit-format-commit commit "%s%n%n%b"))
              (magit-log-edit-set-field
               'author

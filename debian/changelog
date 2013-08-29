@@ -1,0 +1,820 @@
+magit (0.11) release; urgency=low
+
+  [ Marius Vollmer ]
+  * Elpanized.
+
+  [ John Wiegley ]
+  * Added new ! command (magit-shell-command)
+  * Preliminary support for "topic branches"
+  * When committing a merge, use .git/MERGE_MSG
+  * A tiny bit of refactoring
+
+  [ Marius Vollmer ]
+  * Make rebasing work again, and improve it a bit.
+  * When pulling, ask for branch if none is configured.
+  * Document changes to pull.
+  * Improve treatment of unmerged files in "Staged changes".
+  * Document new behavior of 'c' and 'C' during a rebase.
+  * Some news.
+  * We are interested in refs not revs.
+  * Use git show-ref to find interesting refs.
+  * Offer to create tracking branches when switching to a remote branch.
+  * Don't use refs/heads/ prefix when checking out branches.
+  * Document changes.
+  * Allow overriding of magit-commit-signoff per commit.
+  * Document C-c C-s signoff toggling.
+
+  [ Marcin Bachry ]
+  * Fix shell escaping.
+  * Explicitly disallow rewriting history from the first commit.
+
+  [ Marius Vollmer ]
+  * Don't mess with the global value of line-move-visual.
+  * Make discarding staged diffs work.
+  * Be robust against the *magit-process* buffer getting killed.
+  * README updates.
+  * Delay inserting and washing of big diffs.
+  * Don't use make-variable-buffer-local during mode setup.
+  * It' magit-wash-diff-section, not magit-wash-section-diff...
+
+  [ Steve Purcell ]
+  * Fix display of unpushed/unpulled git-svn patches
+
+  [ Marius Vollmer ]
+  * Don't allow slashes in remote nicknames.
+  * Only discard staged diffs for files that don't have unstaged changes.
+  * Directly look for git-svn ref name, don't use magit-list-interesting-refs.
+  * Cosmetics.
+  * Make magit-ref-exists-p work.
+  * Don't include git-svn branches in the 'interesting branches'.
+  * Hide status diffs by default again.
+  * Fix display of unmerged paths.
+  * Fix -U for diffs in the status buffer.
+  * Make 'a' and 'v' work with whole diffs.
+  * Fix "resolge" type in error message.
+  * Do not run Git via the shell, ever.
+  * Mention performance improvements in NEWS.
+  * Document why empty diff sections are no problem.
+  * Use diff-index and diff-files for the status buffer.
+  * Stage all untracked files when on "Untracked files" title.
+  * Optionally stage also untracked files in magit-stage-all.
+  * Reinitialize modes when reverting file contents.
+  * Only revert buffers that belong to the current repo.
+  * Support for magit-repo-dirs and nice completion based on it.
+  * Make sure current-prefix-arg is a cons before caring it.
+  * Hide diffs by default again.
+  * Speed up washing of untracked files a bit.
+  * Refresh the index before constructing the status buffer.
+  * Don't use the heavy machinery to run "git update-index".
+  * Towards 0.8.
+  * Produce cleaner status buffer for unmerged files.
+
+  [ Phil Jackson ]
+  * `magit-get-svn-ref' now emulates the git-svn way of remote fetching.
+  * Squashable, manual merges.
+  * completing-read-configuration: Great with `anything-completing-read' or perhaps `ido-completing-read'.
+  * More detailed and structured information from git-svn.
+  * A simple caching mechanism to ease the `magit-get-svn-ref-info' pain.
+  * Set the remote string to the svn url and revision when in a git-svn repo.
+  * Highlighting of sha and graph in log buffer.
+  * Moved graph to the second column.
+  * Basic functionality, only asking for revision.
+  * `magit-svn-find-rev' now supports the prefix arg. * magit.el (magit-svn-find-rev): Prefix support for branch name. * magit.texi: Documenting magit-svn-find-rev.
+
+  [ Marius Vollmer ]
+  * Use --decorate=full so that it works again with Git 1.6.4.
+  * Use --decorate=full so that it works again with Git 1.6.4.
+
+  [ Phil Jackson ]
+  * Highlight refs according to their origin.
+  * Better label colours for lighter backgrounds.
+  * Box around labels.
+
+  [ Rémi Vanicat ]
+  * Always use magit-git-standard-options when calling git
+  * [Tramp] Two more fix, make staging with magit on tramp dir possible
+
+  [ Marius Vollmer ]
+  * Acknowledge Rémi Vanicat.
+
+  [ Phil Jackson ]
+  * Use `magit-present-log-line-function'.
+
+  [ Rémi Vanicat ]
+  * Make magit ask for ssh passphrase
+
+  [ Phil Jackson ]
+  * C-u will now keep the index when stashing.
+  * Bug fix: Commit buffer will fill if the commit is current and the buffer dead.
+  * Added `magit-omit-untracked-dir-contents' to optionally stop magit listing everything in an untracked directory.
+  * Removed redundant call from `magit-get-svn-ref-info'.
+  * Highlight only the diff markers (not the text after them).
+
+  [ Alexey Voinov ]
+  * magit-get-all is wrapper for git config --get-all
+  * Fixed svn-ref-info for most non-standard layouts
+
+  [ Pavel Holejsovsky ]
+  * Make async git invocation work on cygwin.
+
+  [ Alexey Voinov ]
+  * emulate append-to-file, because it doesn't work over tramp
+
+  [ Rémi Vanicat ]
+  * In magit-ignore-file, add a new line if there wasn't one in the ignore file
+
+  [ Alexey Voinov ]
+  * Replaced call-process-region with start-file-process and wait.
+
+  [ Phil Jackson ]
+  * Refs matching was too greedy and causing some logs not to render.
+  * Remove 'HEAD' from ref list.
+
+  [ Alexey Voinov ]
+  * Show the right buffer when showing stash
+  * Don't show empty *magit-stash* buffer.
+  * Use sha1 to differetiate between stashes, not stash number
+
+  [ Phil Jackson ]
+  * Merge branch 'fancy-log-output'.
+
+  [ Hannu Koivisto ]
+  * Fix magit-log-edit-mode keymap definition and activation.
+  * Fix magit-get-top-dir from ruining paths with symlinks.
+  * Add command magit-goto-parent-section.
+  * Add command magit-toggle-file-section.
+  * Add command magit-reset-head-hard.
+
+  [ Rémi Vanicat ]
+  * use --pretty=format: * %H %s where needed
+  * Use view-mode for the *magit-process* buffer
+  * Show the graph in wazzup.
+
+  [ Ben Walton ]
+  * Add --with-site-start support to configure
+  * Depend on specific version of automake.
+  * Add an rpm .spec file
+
+  [ Phil Jackson ]
+  * `magit-refresh-log-buffer' can now take more than one (git commandline) argument.
+  * Added the command `magit-log-grep' (no keybinding).
+  * Finished off documentation.
+
+  [ Rémi Vanicat ]
+  * Better documentation and error reporting.
+  * Added docstring for section's function
+  * check for the current branch before switching buffer
+  * Using HEAD as branch-name when this is a detached HEAD
+
+  [ Phil Jackson ]
+  * If wazzup head is detached then describe it so.
+
+  [ Moritz Bunkus ]
+  * Guess the remote branch name from the branch's "merge" config item
+  * Provide useful functions for the branch list
+
+  [ Phil Jackson ]
+  * SHA1 gets colour.
+  * Bit more output.
+  * Have `magit--branch-name-from-line' pull out the branch name.
+  * Put branch name in text properties.
+  * n/p now allow the user to move about in branch-view.
+  * Removed "remotes" from the branch name.
+  * Fix `magit--branch-name-at-point'.
+  * Revert "Fix `magit--branch-name-at-point'."
+  * Fix `magit--is-branch-at-point-remote'
+  * Comments, removed old-point code which did nothing.
+  * Use `fundamental-mode' rather than `text-mode'
+  * Fix `magit--branch-name-at-point'.
+
+  [ Moritz Bunkus ]
+  * Only start the server if it isn't running
+
+  [ Rémi Vanicat ]
+  * Added minor mode for the different magit buffer.
+  * Moving hunk size modifier in modes where there are hunks.
+  * Moving staging function to status buffer
+  * Moving diff view function where there are commits.
+  * Moving apply, cherry-pick and revert function.
+  * Moving merging and branching function where there are commit and branch.
+  * Moving function working specifically on status hunk, diff and files
+  * Moving function related to current status
+  * Regrouping command that create new view of current git repositories.
+
+  [ Roger Crew ]
+  * magit-show-branches shows wrong repository
+
+  [ Rémi Vanicat ]
+  * Added a function to grow the number of log in the log view
+
+  [ Phil Jackson ]
+  * Minor doc changes.
+  * Fix for appending an explicit number of new log entries.
+
+  [ Roger Crew ]
+  * Magit now compiles cleanly.Fix for appending an explicit number of new log entries.
+  * docstrings for various functions
+  * *magit-FOO-log* / introduce buffer name variables
+  * remove runtime dependence on cl.el
+
+  [ Leo ]
+  * Fix open parentheses in doc strings
+
+  [ Rémi Vanicat ]
+  * use "e" for more log
+
+  [ Phil Jackson ]
+  * Added some missing contributor names.
+
+  [ Rémi Vanicat ]
+  * Make magit ask for password also when git is asking for an host password
+  * Make the process-connection-type customizable.
+
+  [ Óscar Fuentes ]
+  * Correct informative text for showing more log entries
+  * Revert buffers after committing
+
+  [ Rémi Vanicat ]
+  * When there is a guessed branch, it make a good default rev.
+  * Use guess-branch and default-rev wherever we ask for a branch or a rev.
+
+  [ Phil Jackson ]
+  * Use `magit-section-case' to get branch from wazzup.
+
+  [ Moritz Bunkus ]
+  * Only call server-running-p on Emacs 23 or newer
+
+  [ Rémi Vanicat ]
+  * Added a compatibility function for start-file-process as it does not exist in Emacs 22.
+
+  [ David Abrahams ]
+  * Have files saved when finished a three-way-merge with ediff.
+
+  [ Ramkumar Ramachandra ]
+  * Add an option to confirm reverting an item.
+
+  [ Phil Jackson ]
+  * Mention 'e' being the new 'l' in log view.
+  * Added `magit-list-buffers'.
+  * Added `magit-list-projects.
+  * `magit-list-projects' returns full path.
+  * Replace cl functions.
+  * Added `magit-wl-pipe-to-am'.
+  * Acknowledge David Abrahams.
+  * Markdown'd the README.
+  * Revert "Merge branch 'am-from-wl'"
+  * Link to README to keep automake happy.
+  * Added mk_rel.bash to help.. mk rels.
+  * Added a link to the downloads in the README.
+
+  [ Rémi Vanicat ]
+  * Use markdown for all of the links.
+  * Add encoding declaration to magit.texi
+
+  [ Phil Jackson ]
+  * Missed a possible graph shape in log re.
+  * Gave `magit-log-grep' a key binding (s - search).
+  * Put back `magit-list-buffers' and `magit-list-projects' as they might come in handy to others.
+
+  [ Rémi Vanicat ]
+  * Use magit-git-output instead of magit-git-string in magit-interactive-resolve
+
+  [ Phil Jackson ]
+  * Updated the README with homepage information.
+  * New function `magit-log-all' which provides --all functionality.
+
+  [ oscar ]
+  * Works without supporting prefixes
+  * Pass prefix argument to command
+  * Removed some debug code
+  * Show two menu entries per line
+  * Key for showing the docstring of the associated function
+  * Added some log commands
+  * Display and input options
+  * Do not require the -option suffix for menu items
+  * Removed extra parentheses
+  * Pass options to log commands
+  * Fix showing help
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * Say "New annotated tag name" not "New tag name" on T
+  * Give magit-mode-hook a docstring
+  * Add a hook for magit-log-edit-mode
+  * Make magit's README file better
+  * Not "and" at the beginning of a sentence + better sh example
+  * Add bit about history + Marius + Philip back in
+
+  [ oscar ]
+  * Code moved to a place where it makes more sense
+  * Filters commands and options by group
+  * Several branch-related commands and options
+  * magit-menu-make-option-list rewritten
+
+  [ Phil Jackson ]
+  * Closes #4. Added some bindings for commit-mode.
+
+  [ Oscar Fuentes ]
+  * Do not use use shell-quote-argument for options picked on the menu
+  * Added some log options, just for fun. Removed log-grep command
+  * Removed some keybindings and collapsed some menu entries
+  * Append colon and space to the end of prompt
+  * Corrected docstring of magit-custom-options
+  * Fixed usage of magit-custom-options on some commands
+  * Highlight active options on menu.
+  * Use all available columns on window for displaying menu items
+  * Displays the option name instead of the description
+
+  [ Phil Jackson ]
+  * Added a couple of faces for good/bad bisect refs.
+  * `magit-tag' now knows about revisions.
+  * Log buffer knows about tagging again.
+  * Nicer colours for the bisect refs.
+  * Nicer colours for the tag indicators.
+
+  [ Mark Hepburn ]
+  * magit-interactive-rebase: use locate-file and exec-path to find emacsclient, instead of hard-coding to exec-directory
+
+  [ Phil Jackson ]
+  * Added Mark Hepburn to the contributors list.
+
+  [ Oscar Fuentes ]
+  * Fixed magit-move-branch
+
+  [ Rémi Vanicat ]
+  * Removing a duplicate switch-to-buffer
+  * [magit-status] Use generate-new-buffer for creating a new buffer
+  * In magit-insert-section, do not presume that CMD is git
+
+  [ Phil Jackson ]
+  * Highlight the sha1 at the top of a diff buffer.
+
+  [ Rémi Vanicat ]
+  * Remove decency on parse-time.
+
+  [ Moritz Bunkus ]
+  * Forward port `server-running-p' from Emacs 23 as `magit-server-running-p' for Emacs < 22 and calls `server-running-p' on >= 23.
+
+  [ Ramkumar Ramachandra ]
+  * Replace goto-line
+  * Replace save-excursion, set-buffer with with-current-buffer
+
+  [ Phil Jackson ]
+  * Basics working. Keybindings, highlighting.
+  * Added and mapped `rebase-mode-kill-line'.
+  * Made move-{up,down} functions rebase-mode specific.
+  * Improve the move-{up,down} functions.
+  * Added `rebase-mode-abort'.
+  * Docs for variables.
+  * Document functions, mode.
+  * Only kill a line if it looks like an action line.
+  * Ask the user when aborting a rebase.
+  * Clarify abort docs.
+  * Licence, a little commentary.
+  * Bit of formatting.
+  * Create the edit function dynamically so we get a description in `describe-mode'.
+  * Keep column position when moving lines.
+  * Move column handling up a level in move functions.
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * Use (magit-read-rev) for "Interactively rebase to:" message
+
+  [ Phil Jackson ]
+  * C-c C-c analogous to C-c # and C-c C-k analogous to a.
+  * Only ask to abort when buffer is modified.
+  * c for pick, n and p for navigation.
+  * Don't allow the editing of lines which aren't action lines.
+  * Stop using generic-mode. Highlight comments manually.
+  * Repopulate `auto-mode-alist'.
+  * Fixed the action regexp which was too greedy.
+  * Added `magit-log-first-parent' command.
+  * Added a little documentation to the log functions.
+
+  [ Nathan Weizenbaum ]
+  * Add an error message for magit-display-process.
+  * Fix a bunch of checkdoc warnings.
+  * Bind : to run Git commands directly.
+
+  [ Phil Jackson ]
+  * Slightly modified prompt for `magit-git-command'.
+  * Create a bin dir, remove test dir.
+  * Added script to print authors and their copyright info, used it to fill header.
+  * Remote tag back in the buffer list.
+  * Ahem, refactored authors.pl.
+  * `magit-maybe-create-local-tracking-branch' allows for no "refs/" string.
+  * User now asked for the name of a local tracking branch. Sensible default given. [R]
+
+  [ Nathan Weizenbaum ]
+  * Add a prefix arg to magit-remote-update to prompt for a remote.
+
+  [ Phil Jackson ]
+  * Release 0.8.1.
+  * Elpa compatibility.
+
+  [ Nathan Weizenbaum ]
+  * Make magit-run-git-async print out the command it's executing.
+
+  [ Rémi Vanicat ]
+  * We don't need the magit-tmp buffer to stay between its used.
+
+  [ Phil Jackson ]
+  * Stop diffless commits tricking magit into an infinite loop.
+
+  [ Sean Bryant ]
+  * Make magit explicitly tell the branch where to push.
+
+  [ Nathan Weizenbaum ]
+  * Make sure the status buffer is updated after a rebase.
+  * Make sure magit-log-edit-set-fields works properly when there are no headers.
+  * Don't add info to the edit log when a commit is successfully applied.
+  * Make magit-ignore-file work even if .gitignore doesn't exist.
+  * Add an option to use "remote/name" style refs rather than "name (remote)".
+  * Make magit-update-remote respect a named remote above SVN.
+  * Have magit-get-current-remote default to "origin", like Git does.
+  * Have magit-push use magit-get-remote.
+  * Allow magit-guess-branch to guess commits as well.
+  * Add history for magit-read-rev.
+  * Make magit-name-rev a little cleaner.
+  * Remove tags/ and remotes/ in name-rev when that doesn't create ambiguity.
+  * Fix ref ambiguity detection.
+
+  [ Alex Ott ]
+  * get true name for directories, that specified by symlinks
+
+  [ Moritz Bunkus ]
+  * Set 'remote branch' text property in branch view
+  * Remove "remotes/" prefix from remote branch names
+
+  [ Nathan Weizenbaum ]
+  * Add a magit-rev-parse function.
+  * Filter out HEAD refs from magit-name-rev.
+  * Abstract out a magit-log-edit-toggle-field function.
+  * Add an edit-log-mode toggle for allowing empty commits.
+  * Add a note in the manual about C-c C-e.
+  * Properly handle pushing a branch without a remote.
+  * When pushing a new branch, manually add merge configuration.
+  * Document the new branch behavior.
+  * The purpose of this branch is to expose more information about the current submode.
+  * Add a magit-current-range variable for diff and log buffers.
+  * Add a magit-reflog-head variable for reflog buffers.
+  * Add magit-wazzup-head and magit-wazzup-all-p variables for wazzup buffers.
+  * Make sure magit-log-edit-toggle-field returns the right value.
+
+  [ Óscar Fuentes ]
+  * A better way for updating the VC modeline
+
+  [ Phil Jackson ]
+  * Docstring for `magit-update-vc-modeline'.
+
+  [ Yann Hodique ]
+  * minimizing extensions patch on top of upstream
+
+  [ Phil Jackson ]
+  * Checkout works again in the branch view.
+
+  [ Alan Falloon ]
+  * Show branch name in "Remote:" section when tracking local branch
+  * Use just the branch name for unpushed/unpulled when the remote is "."
+
+  [ Phil Jackson ]
+  * RET checks out a branch in the branch view.
+  * Manual entry for new branch mode binding.
+  * Replace slashes in tracking branch name suggestion.
+  * Fixed the ref/rev typo.
+
+  [ Leo ]
+  * Don't run magit-log-edit-mode-hook twice.
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * magit-remote-ref-format: Improved documentation
+
+  [ Phil Jackson ]
+  * Removed old insert functions.
+  * Added `magit-remote-branch-name'. Fixed unpushed args.
+  * Stop `magit-remote-string' expecting the svn-info cache.
+  * Fix `magit-refresh-status'.
+  * Formatting.
+  * Use remote branch for unpushed ref.
+  * Actual branch name in remote string.
+  * Make git svn fetch an explicit command rather than overriding remote-fetch.
+  * Update manual with regards to the svn change.
+  * Add magit-wanderlust.el.
+
+  [ Rémi Vanicat ]
+  * Handle 7 and 8 char small sha
+
+  [ Phil Jackson ]
+  * Formatting.
+  * Release 0.8.2.
+  * Removed wanderlust again.
+  * Build system updated.
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * magit-stash: Prefix user-supplied description with --
+
+  [ Phil Jackson ]
+  * Allow annotated tags anywhere in the graph.
+  * Bit more information in the commit buffer.
+  * Pull uses --rebase with prefix arg.
+  * Better tramp interaction.
+
+  [ Leo ]
+  * Fix a bug introduced in 1efde92
+
+  [ Remco van 't Veer ]
+  * added "i" to magit-wazzup-mode-map for magit-ignore-item
+
+  [ Nathan Weizenbaum ]
+  * Major changes to the extension API.
+  * Properly quote hook names.
+
+  [ Phil Jackson ]
+  * Fixed some bugs in magit-svn.
+  * Correct hook names in magit-svn.el.
+  * localise the svn cache and use it when gathering un{pushed,pulled} commits.
+
+  [ Timo Juhani Lindfors ]
+  * Provide simple Makefile so that auto* is not necessary.
+  * Remove auto* files.
+  * Fix version number parsing, generate info
+  * Remove magit.elc magit.info on clean
+  * Call build if no arguments are given to Makefile. Honor PREFIX.
+
+  [ Phil Jackson ]
+  * Merged 'master' Conflicts: 	magit.el
+  * mk_rel.bash knows about the new Makefile.
+  * Default prefix /usr/local.
+  * Removed unneeded files.
+  * Make the Makefile aware of extensions.
+  * Added a dist target.
+  * Updated the README.
+  * Updated the authors section.
+  * Fix the deps for dist.
+  * Moved the menu/key definitions into another file.
+  * Experiment with a new style for the mappings.
+  * Keymap installs for mode.
+  * Actions just about ready, keymap-wise.
+  * Simple pass at drawing actions.
+  * Some font-locking.
+  * Renamed key file, added kill-buffer.
+  * Executing with custom options implemented.
+  * Put '-' in front of switch keys.
+  * Run log hook from magit itself.
+  * Remove debugging.
+  * C-g kills buffer.
+  * Fix RE for finding switch.
+  * Fix buffer not being read-only.
+  * Options var now buffer local.
+  * Stop window fitting to buffer.
+  * Basic argument display in place.
+  * Require key-mode in magit.el.
+  * Window config stored and reapplied on quit.
+  * Use pop-to-buffer instead of splitting manually.
+  * Doc.
+  * Args being remembered.
+  * Output propertised arg value.
+  * Arguments now being passed through.
+  * Fixed quit.
+  * Added author arg.
+  * Changed the prefix for args to '='.
+  * Added merge commit switch.
+  * Added branches arg.
+  * Remove unneeded defuns.
+  * Put rebasing commands in menu.
+  * Concat -> format.
+  * Revert (again) to the split-window method of display.
+  * Fix non-display of option.
+  * Added a tagging menu.
+  * Allow for case insensitivity in patterns.
+
+  [ Christian Kluge ]
+  * Typo he -> the
+
+  [ Phil Jackson ]
+  * Pretty layout of actions.
+  * Start of on-the-fly font-locking.
+  * All actions fontified.
+  * draw-args function.
+  * All args fontified.
+  * draw-switches function.
+  * All switches fontified.
+  * Make sure the menu turns up at the bottom of the window.
+  * Columify switches too.
+  * Don't add a newline if a menu item is the last.
+  * Docs.
+  * Added a branch menu.
+  * Added a branching menu.
+  * Remove rebase behaviour from pull.
+  * Added push/pull menus.
+  * Added `magit-custom-options' to git-pull.
+  * Use `window-width' to wrap menu items.
+  * Added -n to push menu. Added magit-custom-options to push command.
+  * Docs.
+  * Separation of fetch and remote update.
+  * Docs.
+  * Formatting.
+  * Slimmed right down the log-edit stuff.
+  * A couple more options for committing.
+  * Formatting.
+  * Fix create-branch.
+  * Require assoc.
+
+  [ Timo Juhani Lindfors ]
+  * magit: [PATCH] Make face of the graph of log output lighter on dark backgrounds.
+  * magit: [PATCH] Improve documentation of minor modes. Keymaps are now included.
+
+  [ Phil Jackson ]
+  * Added a merge menu.
+  * Added a stash menu.
+  * Prefix arg allows pulling from a specified location.
+  * Removed superfluous debugging.
+  * Remove redundant functions from merge command.
+
+  [ Christian Kluge ]
+  * Restore GPL
+
+  [ Chris Bernard ]
+  * Add stash apply/pop "--index" option, toggled if there's a prefix arg (C-u) given to 'a' or 'A'
+
+  [ Robin Green ]
+  * Add new file to Makefile.am
+  * Fix typo
+
+  [ Phil Jackson ]
+  * Merged the different type of... merges.
+  * Put actual key bindings back in magit.el.
+  * Added commands for running stuff.
+  * Move cursor to beginning of menu buffer.
+  * Generate interactive popup functions (thanks Rémi).
+  * Clear whitespace from key buffer.
+  * Functions for plugins to add to the key groups.
+  * Docs.
+  * Dedupe the magit-key-mode-insert-* functions.
+  * Func to add a new key group.
+  * Fix up the group helper functions to handle a case where there are no current bindings.
+  * svn plugin now key-group aware.
+  * Set the correct keybinding for log-edit-mode when we know the action.
+  * Annotated tagging back.
+  * make-variable-buffer-local -> make-local-variable.
+  * Remove calls of non-existent functions.
+  * Better wording for the readme.
+  * Updated manual.
+  * Put actions at the bottom of the group buffer to indicate flow.
+  * Added detail about plugins to the README.
+  * Proper author names in topgit code.
+  * Added key-mode.el to the Makefile.
+  * Fixed compile warnings by adding missing defvars.
+
+  [ Timo Juhani Lindfors ]
+  * Don't use a pty with git processes that take input from magit since that would set the terminal option icrnl which would modify the input. In particular \r would get converted to \n (issue #20).
+
+  [ Phil Jackson ]
+  * Added Pickaxe options.
+
+  [ Timo Juhani Lindfors ]
+  * magit: [PATCH] Improve documentation of minor modes. Keymaps are now included.
+
+  [ Phil Jackson ]
+  * Message to hint at what to do when presented with key menu.
+  * Fix mis-calc regarding column layout.
+  * Optionally columnify options too.
+  * New opts/args.
+  * Put the args themselves in parens.
+  * Revert the log-edit bits and bobs.
+  * Put back the automatic merge function for branch menu.
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * magit-rebase-info: remove dead code and add >= 1.6 support
+
+  [ Phil Jackson ]
+  * Added a help function.
+  * Added force to push switch list.
+  * Added more man-page declarations.
+  * Remove debugging function, docs.
+
+  [ Yann Hodique ]
+  * incorrect hook was used to insert topgit section
+  * use `intern' in place of `make-symbol'
+  * Magit extensions documentation
+
+  [ Phil Jackson ]
+  * Docs.
+  * Hitting ret on args does same as using prefix key.
+  * Hitting ret on switches does same as using prefix key.
+  * Hitting ret on actions does same as using prefix key.
+  * Keep cursor where it was after executing a command with RET.
+  * Remove conflicting binding.
+
+  [ Aaron Culich ]
+  * make checkout update modeline
+  * Checkout should ask to save some buffers if magit-save-some-buffers is non-nil. And since this functionality is now used in three places I also created a helper function to do it.
+  * like checkout, create-branch should also query if the user wants to save buffers and also update the modeline when the branch has been switched.
+  * remove accidental duplicate line
+  * since there is no else clause, we can turn the if statement into a when and get rid of the progn.
+  * added myself as a contributor.
+  * Make magit-run* look in the magit-process-buffer for a useful error string when reporting an error, and fall back on the less helpful "Git failed" message only if no error message could be found in the buffer.
+  * make checkout update modeline
+  * Checkout should ask to save some buffers if magit-save-some-buffers is non-nil. And since this functionality is now used in three places I also created a helper function to do it.
+  * like checkout, create-branch should also query if the user wants to save buffers and also update the modeline when the branch has been switched.
+  * remove accidental duplicate line
+  * since there is no else clause, we can turn the if statement into a when and get rid of the progn.
+  * added myself as a contributor.
+  * Make magit-run* look in the magit-process-buffer for a useful error string when reporting an error, and fall back on the less helpful "Git failed" message only if no error message could be found in the buffer.
+
+  [ Phil Jackson ]
+  * Remove extraneous whitespace.
+  * Added fetch-other and removed useless fetch option.
+  * Fix --committer option.
+
+  [ Hannu Koivisto ]
+  * iswitchb-based completing-read alternative for rev-reading etc.
+  * Smarter prompting for magit-checkout
+  * magit-read-rev: add mechanism to mask uninteresting refs
+  * Smarter prompting for magit-rebase-step start
+  * Fix magit-completing-read prompting.
+
+  [ Phil Jackson ]
+  * Make builtin completing read default again.
+  * Added the ability to push tags.
+
+  [ Philip Weaver ]
+  * in Makefile, fix the way we set emacs load-path
+
+  [ Ævar Arnfjörð Bjarmason ]
+  * magit-rebase-info: solve the 'The "R" rebase method needs a small fix' issue
+  * rebase: add the "onto" information back & reformat
+  * rebase: tell the user he can press R to proceed
+  * rebase: add hint letters to "[A]bort, [S]kip, or [C]ontinue?" message
+  * magit-refresh-status: align messages for rebase message
+
+  [ Aaron Culich ]
+  * Use condition-case to report bugs instead of just ignoring errors.
+
+  [ Phil Jackson ]
+  * More authors changed my 'job title'.
+  * Make the key-mode plugin interface a little nicer to use.
+  * Added `magit-svn-create-branch'.
+
+  [ Aaron Culich ]
+  * This bugfix gets rid of "File ... no longer exists!" errors in magit-revert-buffers by checking to make sure that the file exists and is readable before trying to revert.
+
+  [ Phil Jackson ]
+  * Stash now takes account of its key-group arguments.
+
+  [ Robert Boone ]
+  * Add switch for fast-forward only merge: --ff-only
+
+  [ Phil Jackson ]
+  * New ranged long log command.
+  * New ranged log command.
+  * Reflog commands a bit more like the log commands now.
+  * Make sure display-log range command is optional.
+  * Fix syntax error.
+  * Remove the merging functions from branch view for the time being (needs refactoring).
+
+  [ Ramkumar Ramachandra ]
+  * Allow prefix to amend while committing
+
+  [ Phil Jackson ]
+  * Docs, remove extraneous whitespace.
+
+  [ Ramkumar Ramachandra ]
+  * log-edit-mode: Make "C-x C-s" a noop
+
+  [ Michal Maruska ]
+  * UI: show a line below the Section to be clear
+  * add "--no-color" to some invocations, since we use the output in  Emacs buffers.
+  * use 'font-lock-face text property rather than face.
+  * extract functionality from the macro; magit-fontify-diff
+  * switch to the Status buffer when Rewriting History
+  * Start LOG by default from "master"
+  * make magit-log-mode keymap updatable
+  * New command to move from Log to status (buffers).
+  * from LOG start-rewriting history w/ no questions (unless C-u)
+  * How to treat the Commit msg. when interactively accumulating (cherry,merge,revert)
+  * some new function, not mine! magit-log-files ?????
+  * scroll-up by handy key
+  * scroll into previous/next commit!
+  * LOG and  checkout  by keys
+  * magit-goto-log
+  * While doing some operations, I don't want to lose the LOG buffer. I don't want it refreshed automatically.
+  * bugfix? <init>
+  * one more fix: expanding ranges ....
+  * ???? reading ranges
+  * rename def -> default
+  * for tab-completion  magit-read-rev ?
+  * more frequently I want to see the Log buffer in full
+  * scroll by BackSP
+  * start debian package building
+  * magit-log-edit-append:   allow avoiding the implicit newline.
+  * new: magit-get-log-edit-buffer  -- formalize re-setting the    default-directory (buffer-local variable).
+  * comment on my quest to avoid double commit-msg parts during an automated git porcelain procedure.
+  * new magit-pop-to-log-edit-half: don't insert .git/MERGE_MSG
+  * The other HALF: possibly insert .git/MERGE_MSG, but in certain Git repositories prepend the [branch] to the commit message.
+
+ -- Michal Maruska <mmaruska@gmail.com>  Fri, 02 Nov 2012 12:39:26 +0100
+
+magit (0.9) unreleased; urgency=low
+
+  * Initial release.
+
+ -- Michal Maruska <mmaruska@gmail.com>  Mon, 07 Nov 2011 16:40:23 +0100
