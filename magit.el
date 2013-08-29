@@ -3212,7 +3212,7 @@ must return a string which will represent the log line.")
                                     (destructuring-bind (label face)
                                         (magit-ref-get-label-color r)
                                       (and label
-                                           (propertize label 'face face))))
+                                           (propertize label 'font-lock-face face))))
                                   refs))))
              (concat
               (mapconcat 'identity colored-labels " ")
