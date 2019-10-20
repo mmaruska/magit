@@ -1,3 +1,38 @@
+magit (0.11-maruska) release; urgency=medium
+
+  * Use 'font-lock-face text property rather than face.
+  * Extract functionality from the macro; magit-fontify-diff
+  * switch to the Status buffer when Rewriting History
+  * Start LOG by default from "master"
+  * FIXME:  make magit-log-mode keymap updatable
+  * New command to move from Log to status (buffers).
+  * from LOG start-rewriting history w/ no questions (unless C-u)
+  * some new function, not mine! magit-log-files ?????
+  * scroll-up by handy key
+  * scroll into previous/next commit!
+  * LOG and  checkout  by keys
+  * magit-goto-log
+  * SQ: font-lock-face
+  * While doing some operations, I don't want to lose the LOG buffer. I don't want it refreshed automatically.
+  * bugfix? <init>
+  * one more fix: expanding ranges ....
+  * ???? reading ranges
+  * for tab-completion  magit-read-rev ?
+  * more frequently I want to see the Log buffer in full
+  * scroll by BackSP
+  * sq font-lock-face
+  * addition code handy for keybinding development
+  * change binding for L:  go to log. (not add changelog entry)
+  * sq:  B binding (+ L) return to magit-checkout
+  * binding o to go up/parent
+  * Use built-in delete-directory.
+  * magit-max-args-internal defined inside eval-and-compile is not enough?
+  * add debian rules
+  * disable tests -- never needed them.
+  * drop usr/local
+
+ -- Michal Maruska <mmaruska@gmail.com>  Sun, 20 Oct 2019 21:46:25 +0200
+
 magit (0.11) release; urgency=low
 
   [ Marius Vollmer ]
