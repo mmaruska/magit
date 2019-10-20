@@ -1,6 +1,6 @@
 VERSION=$(shell git describe --tags --dirty)
 EMACS=emacs
-PREFIX=/usr/local
+PREFIX=/usr/
 SYSCONFDIR=/etc
 ELS=magit.el magit-svn.el magit-topgit.el magit-stgit.el magit-key-mode.el magit-bisect.el magit-wip.el rebase-mode.el magit-blame.el
 ELS_CONTRIB=contrib/magit-simple-keys.el contrib/magit-classic-theme.el
