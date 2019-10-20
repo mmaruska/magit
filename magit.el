@@ -748,6 +748,23 @@ operation after commit).")
         (setq magit-have-abbrev (eq res 0)))))
 
 ;;; Compatibilities
+(defun magit-max-args-internal (function)
+    "Returns the maximum number of arguments accepted by FUNCTION."
+    (if (symbolp function)
+        (setq function (symbol-function function)))
+    (if (subrp function)
+        (let ((max (cdr (subr-arity function))))
+          (if (eq 'many max)
+              most-positive-fixnum
+            max))
+      (if (eq 'macro (car-safe function))
+          (setq function (cdr function)))
+      (let ((arglist (if (byte-code-function-p function)
+                         (aref function 0)
+                       (second function))))
+        (if (memq '&rest arglist)
+            most-positive-fixnum
+          (length (remq '&optional arglist))))))
 
 (eval-and-compile
   (defun magit-max-args-internal (function)
