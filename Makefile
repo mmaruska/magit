@@ -91,8 +91,8 @@ install_contrib: contrib
 
 install_all: install install_contrib
 
-test: $(ELCS)
-	$(BATCH) -l tests/magit-tests.el -f ert-run-tests-batch-and-exit
+#test: $(ELCS)
+#	$(BATCH) -l tests/magit-tests.el -f ert-run-tests-batch-and-exit
 
 clean:
 	rm -f magit.info #NO_DIST
