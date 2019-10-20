@@ -791,7 +791,7 @@ record undo information."
                 after-change-functions)
             ,@body)))))
 
-  (if (>= (magit-max-args-internal 'delete-directory) 2)
+  (if t ;; (>= (magit-max-args-internal 'delete-directory) 2)
       (defalias 'magit-delete-directory 'delete-directory)
     (defun magit-delete-directory (directory &optional recursive)
       "Deletes a directory named DIRECTORY.  If RECURSIVE is non-nil,
