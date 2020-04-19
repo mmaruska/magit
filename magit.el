@@ -4111,9 +4111,11 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
 
 (defun magit-write-rewrite-info (info)
   (with-temp-file (concat (magit-git-dir) "magit-rewrite-info")
-    (prin1 info (current-buffer))
-    (princ "\n" (current-buffer))))
-
+    (let ((print-level nil)
+          (print-length nil)
+          )
+      (prin1 info (current-buffer))
+      (princ "\n" (current-buffer)))))
 (magit-define-inserter pending-commits ()
   (let* ((info (magit-read-rewrite-info))
          (pending (cdr (assq 'pending info))))
