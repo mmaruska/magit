@@ -1,3 +1,10 @@
+magit (0.12-maruska) release; urgency=medium
+
+  * fix: never truncate long lists
+  * Extract macro body to edebug it
+
+ -- Michal Maruska <mmaruska@gmail.com>  Sun, 19 Apr 2020 16:39:22 +0200
+
 magit (0.11-maruska) release; urgency=medium
 
   * Use 'font-lock-face text property rather than face.
