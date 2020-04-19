@@ -4116,6 +4116,26 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
           )
       (prin1 info (current-buffer))
       (princ "\n" (current-buffer)))))
+
+;; Extract from the macro, so I can edebug it
+(defun magit-doit (pending)
+  ""
+  ;;
+  (dolist (p pending)
+    (let* ((commit (car p))
+           (properties (cdr p))
+           (used (plist-get properties 'used)))
+      (magit-with-section commit 'commit
+        (magit-set-section-info commit)
+        (insert (magit-git-string
+                 "log" "--max-count=1"
+                 (if used
+                     "--pretty=format:. %s"
+                   "--pretty=format:* %s")
+                 commit "--")
+                "\n")))))
+
+;; mmc:
 (magit-define-inserter pending-commits ()
   (let* ((info (magit-read-rewrite-info))
          (pending (cdr (assq 'pending info))))
@@ -4123,19 +4143,9 @@ With a prefix arg, also remove untracked files.  With two prefix args, remove ig
       (magit-with-section 'pending nil
         (insert (propertize "Pending commits:\n"
                             'font-lock-face 'magit-section-title))
-        (dolist (p pending)
-          (let* ((commit (car p))
-                 (properties (cdr p))
-                 (used (plist-get properties 'used)))
-            (magit-with-section commit 'commit
-              (magit-set-section-info commit)
-              (insert (magit-git-string
-                       "log" "--max-count=1"
-                       (if used
-                           "--pretty=format:. %s"
-                         "--pretty=format:* %s")
-                       commit "--")
-                      "\n")))))
+        ;; this fails:
+        (magit-doit pending)
+        )
       (insert "\n"))))
 
 (defun magit-rewrite-set-commit-property (commit prop value)
